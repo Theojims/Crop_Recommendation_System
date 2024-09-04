@@ -16,7 +16,7 @@ from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path=os.path.join('Artifact',"proprocessor.pkl")
+    preprocessor_obj_file_path=os.path.join('Artifact',"preprocessor.pkl")
 
 class DataTransformation:
     def __init__(self):
@@ -73,11 +73,43 @@ class DataTransformation:
             train_df=pd.read_csv(train_path)
             test_df=pd.read_csv(test_path)
 
+            ##converting our label to numberical
+
+            crop_dict={
+                        'rice': 1,
+                        'maize': 2,
+                        'jute': 3,
+                        'cotton': 4,
+                        'coconut': 5,
+                        'papaya': 6,
+                        'orange': 7,
+                        'apple': 8,
+                        'muskmelon': 9,
+                        'watermelon': 10,
+                        'grapes': 11,
+                        'mango': 12,
+                        'banana': 13,
+                        'pomegranate': 14,
+                        'lentil': 15,
+                        'blackgram': 16,
+                        'mungbean': 17,
+                        'mothbeans': 18,
+                        'pigeonpeas': 19,
+                        'kidneybeans': 20,
+                        'chickpea': 21,
+                        'coffee': 22
+            }
+
+            train_df['label'] = train_df['label'].map(crop_dict)
+            test_df['label'] = test_df['label'].map(crop_dict)
+            
+
             logging.info("Read train and test data completed")
 
             logging.info("Obtaining preprocessing object")
 
             preprocessing_obj=self.get_data_transformer_object()
+        
 
             target_column_name="label"
             numerical_columns = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']

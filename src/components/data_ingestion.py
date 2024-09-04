@@ -23,7 +23,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Data ingestion process initiated")
         try:
-            df = pd.read_csv(r'C:\Users\JUBOB\Desktop\MLProject\Crop_recommendation.csv')
+            df = pd.read_csv(r'Notebook\Crop_recommendation.csv')
             logging.info('dataset read into dataframe')
             
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok =True)

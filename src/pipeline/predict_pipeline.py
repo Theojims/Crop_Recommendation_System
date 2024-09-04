@@ -12,7 +12,7 @@ class PredictPipeline:
     def predict(self,features):
         try:
             model_path=os.path.join("Artifact","model.pkl")
-            preprocessor_path=os.path.join('Artifact','proprocessor.pkl')
+            preprocessor_path=os.path.join('Artifact','preprocessor.pkl')
             print("Before Loading")
             model=load_object(file_path=model_path)
             preprocessor=load_object(file_path=preprocessor_path)
@@ -25,32 +25,20 @@ class PredictPipeline:
             raise CustomException(e,sys)
 
 
+
 class CustomData:
-    def __init__(  self,
-        N: float,
-        P: float,
-        K:float,
-        temperature:float,
-        humidity: float,
-        ph: float,
-        rainfall: float):
-
+    def __init__(self, N, P, K, temperature, humidity, ph, rainfall):
         self.N = N
-
         self.P = P
-
-        self.K =  K
-
+        self.K = K
         self.temperature = temperature
-
         self.humidity = humidity
-
         self.ph = ph
-
         self.rainfall = rainfall
 
     def get_data_as_data_frame(self):
         try:
+            # Create a dictionary with the input data
             custom_data_input_dict = {
                 "N": [self.N],
                 "P": [self.P],
@@ -61,7 +49,9 @@ class CustomData:
                 "rainfall": [self.rainfall]
             }
 
+            # Convert the dictionary to a Pandas DataFrame
             return pd.DataFrame(custom_data_input_dict)
 
         except Exception as e:
+            # If there's an error, raise a CustomException
             raise CustomException(e, sys)
